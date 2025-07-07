@@ -5,7 +5,8 @@ def download_stock_data(symbol: str,start_date: str, end_date: str):
 
     try:
         # 株価データを取得
-        data = yf.download(symbol, start=start_date, end=end_date)
+        #data = yf.download(symbol, start=start_date, end=end_date)
+        data = yf.download(symbol, period='max')  # 最大期間のデータを取得
 
         if data.empty:
             print(f"警告:データが取得できませんでした ({symbol})")

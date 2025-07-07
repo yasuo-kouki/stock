@@ -1,6 +1,8 @@
 from data_acquisition.download_stock_data import download_stock_data
 from data_preprocessing.clean_stock_data import clean_stock_data
 from labeling.target_label_make import label_peaks
+from features.data_features import add_date_features
+from features.technical_indicators import add_technical_indicators
 
 def main():
 
@@ -16,7 +18,12 @@ def main():
     # 目的関数のラベルの作成
     clean_data['Peaklabel'] = label_peaks(clean_data['Close'], window=3)
     peak_data = clean_data
-    peak_data.to_csv(f'data/target_label_data/label_{stock_name}_data.csv', index=False)
+    # peak_data.to_csv(f'data/target_label_data/label_{stock_name}_data.csv', index=False)
+
+    # 特徴量の追加
+    features_data = add_date_features(peak_data)
+    features_data = add_technical_indicators(features_data)
+    features_data.to_csv(f'data/features/features_{stock_name}_data.csv', index=False)
 
 if __name__ == "__main__":
     main()
